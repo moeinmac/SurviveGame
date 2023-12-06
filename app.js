@@ -12,4 +12,7 @@ const GameData =new Array(height / size)
   .fill(0)
   .map(() => Array(width / size).fill({ v: 0, id: null }));
 
-gridBoard(ctx)
+gridBoard(ctx);
+
+const cookiesNumber = 200;
+distributeCookies(ctx);
