@@ -1,0 +1,110 @@
+body {
+  background-color: #fceeb5;
+  display: flex;
+  gap: 0.5em;
+  /* height: 100vh; */
+}
+
+#canvas {
+  background-color: #fff;
+  cursor: pointer;
+}
+#c1,
+#c2,
+#c3,
+#c4 {
+  display: none;
+}
+.gameData {
+  display: flex;
+  flex-direction: column;
+  font-family: "Nunito";
+  gap: 2em;
+  padding: 1em;
+}
+.agentsData {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+.agentDataContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7em;
+}
+.progressContainer {
+  border-radius: 1em;
+  display: inline-block;
+  overflow: hidden;
+}
+progress {
+  -webkit-appearance: none;
+}
+progress::-webkit-progress-bar {
+  background-color: aliceblue;
+}
+.talented progress::-webkit-progress-value {
+  background-color: #e2791c;
+}
+.talented progress::-moz-progress-bar {
+  background-color: #e2791c;
+}
+
+.hardworker progress::-webkit-progress-value {
+  background-color: #18d6c6;
+}
+.hardworker progress::-moz-progress-bar {
+  background-color: #18d6c6;
+}
+
+.richkid progress::-webkit-progress-value {
+  background-color: #f60609;
+}
+.richkid progress::-moz-progress-bar {
+  background-color: #f60609;
+}
+
+.contented progress::-webkit-progress-value {
+  background-color: #f43075;
+}
+.contented progress::-moz-progress-bar {
+  background-color: #f43075;
+}
+
+.robber progress::-webkit-progress-value {
+  background-color: #051417;
+}
+.robber progress::-moz-progress-bar {
+  background-color: #051417;
+}
+.agentCard {
+  font-family: "Nunito";
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 0.5em;
+  color: #f5f5f5;
+}
+.agentCard header {
+  display: flex;
+}
+.agentCard header .imgContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8em 5.5em;
+  border-radius: 0.5em 0.5em 0 0;
+}
+.agentCard header .imgContainer img {
+  border-radius: 50%;
+  max-width: 80%;
+  outline: 3px solid #f5f5f5;
+  border: 5px solid #fff;
+  background-color: #f5f5f5;
+}
+main {
+  color: #f5f5f5;
+  padding: 0 1rem;
+  font-size: 1.1rem;
+}
