@@ -5,7 +5,7 @@ const drawAgent = (x, y, color) => {
 
 const eraseAgent = async (x, y) => {
   ctx.moveTo(x * size + 1, y * size + 1);
-  drawAgent(ctx, x, y, "#717D7B");
+  drawAgent(x, y, "#717D7B");
   const promise = new Promise((resolve) => {
     setTimeout(() => {
       resolve(ctx.clearRect(x * size + 1, y * size + 1, size - 2, size - 2));

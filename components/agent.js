@@ -1,5 +1,5 @@
 const dangerWealth = 4;
-const seekCost = 0.25;
+const seekCost = 0.2;
 
 class Agent {
   constructor(agentData, x, y, agentID) {
@@ -47,8 +47,8 @@ class Agent {
       const actions = this.getActions(v);
       for (const act of actions) {
         if (GameData[act.y][act.x].v && !GameData[act.y][act.x].id) {
-          this.move(act);
           this.wealth += GameData[act.y][act.x].v;
+          this.move(act);
           return;
         }
       }
@@ -93,3 +93,23 @@ class RichKid extends Agent {
   }
 }
 
+const distributeAgents = (type,aNumber) => {
+  let aCounter = 0;
+  while (aCounter < aNumber) {
+    let x = Math.floor(Math.random() * (width / size - 1));
+    let y = Math.floor(Math.random() * (height / size - 1));
+    if (!GameData[y][x].id) {
+      const agentTypes = new Map([
+        ["T", new Talented(TData, x, y, AgentData.length)],
+        ["HW", new HardWorker(HWData, x, y, AgentData.length)],
+        ["RK", new RichKid(RKData, x, y, AgentData.length)],
+        // ["C", new Contented(CData, x, y, AgentData.length)],
+        // ["R", new Robber(RData, x, y, AgentData.length)],
+      ]);
+      const agent = agentTypes.get(type);
+      AgentData.push(agent);
+      GameData[y][x] = { ...GameData[y][x], id: AgentData.length };
+      aCounter++;
+    }
+  }
+};

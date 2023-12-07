@@ -17,7 +17,23 @@ gridBoard();
 const cookiesNumber = 200;
 distributeCookies();
 
-const agent = new HardWorker(HWData,25 ,5 ,1);
-const ac = agent.getActions(1);
-agent.live()
-console.log(ac);
+const AgentData = [];
+distributeAgents("HW",20);
+distributeAgents("T",20);
+distributeAgents("RK",20);
+
+
+const game = setInterval(() => {
+  if (AgentData.length <= 0) {
+    console.log("END");
+    clearInterval(game);
+  }
+  AgentData.forEach((agent) => {
+    if (agent.live()) {
+      agent.work();
+    } else {
+      agent.die();
+      AgentData.splice(AgentData.indexOf(agent), 1);
+    }
+  });
+}, 1000);
