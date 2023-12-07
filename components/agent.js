@@ -20,6 +20,17 @@ class Agent {
     eraseAgent(this.x, this.y);
     return;
   }
+  getActions(v) {
+    const actions = [
+      { action: "TOP", x: this.x, y: positionValidity(this.y - v) },
+      { action: "BOTTOM", x: this.x, y: positionValidity(this.y + v) },
+      { action: "LEFT", x: positionValidity(this.x - v, true), y: this.y },
+      { action: "RIGHT", x: positionValidity(this.x + v,true), y: this.y },
+    ];
+    return actions.filter((ac) => {
+      if (ac.x != null && ac.y != null) return ac;
+    });
+  }
 }
 
 const drawAgent = (x, y, color) => {
@@ -38,3 +49,8 @@ const eraseAgent = async (x, y) => {
   await promise;
 };
 
+const positionValidity = (pos, isWidth) => {
+  if (pos < 0 || pos > width / size - 1 || (pos > height / size - 1 && !isWidth))
+    return null;
+  return pos;
+};
