@@ -1,5 +1,5 @@
 const dangerWealth = 4;
-const seekCost = 0.25
+const seekCost = 0.25;
 
 class Agent {
   constructor(agentData, x, y, agentID) {
@@ -28,26 +28,40 @@ class Agent {
       { action: "TOP", x: this.x, y: positionValidity(this.y - v) },
       { action: "BOTTOM", x: this.x, y: positionValidity(this.y + v) },
       { action: "LEFT", x: positionValidity(this.x - v, true), y: this.y },
-      { action: "RIGHT", x: positionValidity(this.x + v,true), y: this.y },
+      { action: "RIGHT", x: positionValidity(this.x + v, true), y: this.y },
     ];
     return actions.filter((ac) => {
       if (ac.x != null && ac.y != null) return ac;
     });
   }
-  move(){
+  move(act) {
+    moveAgent(this.x, this.y, act.x, act.y, this.color);
+    GameData[this.y][this.x] = { ...GameData[this.y][this.x], id: null };
+    GameData[act.y][act.x] = { v: 0, id: this.agentID };
+    this.x = act.x;
+    this.y = act.y;
+    this.wealth -= seekCost;
+  }
+  seek() {
     for (let v = 1; v <= this.vision; v++) {
-      const actions = this.getActions(v)
+      const actions = this.getActions(v);
       for (const act of actions) {
         if (GameData[act.y][act.x].v && !GameData[act.y][act.x].id) {
-          moveAgent(this.x, this.y, act.x, act.y, this.color);
-          GameData[this.y][this.x] = { ...GameData[this.y][this.x], id: null };
+          this.move(act);
           this.wealth += GameData[act.y][act.x].v;
-          GameData[act.y][act.x] = { v: 0, id: this.agentID };
-          this.x = act.x;
-          this.y = act.y;
           return;
         }
       }
+    }
+    const actions = this.getActions(1);
+    while (actions.length >= 0) {
+      let pickRandom = Math.floor(Math.random() * actions.length);
+      let act = actions[pickRandom];
+      if (!GameData[act.y][act.x].id) {
+        this.move(act);
+        return;
+      }
+      actions.splice(pickRandom, 1);
     }
   }
 }
@@ -75,7 +89,11 @@ const moveAgent = (x, y, newX, newY, color) => {
 };
 
 const positionValidity = (pos, isWidth) => {
-  if (pos < 0 || pos > width / size - 1 || (pos > height / size - 1 && !isWidth))
+  if (
+    pos < 0 ||
+    pos > width / size - 1 ||
+    (pos > height / size - 1 && !isWidth)
+  )
     return null;
   return pos;
 };
