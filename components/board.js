@@ -1,4 +1,4 @@
-const gridBoard = (ctx) => {
+const gridBoard = () => {
   ctx.beginPath();
   for (let i = 0; i <= width / size; i++) {
     ctx.moveTo(i * size, 0);
