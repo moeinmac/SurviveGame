@@ -17,7 +17,7 @@ gridBoard();
 const cookiesNumber = 200;
 distributeCookies();
 
-const agent = new Agent(HWData,25 ,22 ,1);
+const agent = new Agent(HWData,25 ,5 ,1);
 const ac = agent.getActions(1);
 agent.live()
 console.log(ac);

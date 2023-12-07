@@ -1,3 +1,6 @@
+const dangerWealth = 4;
+const seekCost = 0.25
+
 class Agent {
   constructor(agentData, x, y, agentID) {
     this.vision = agentData.vision;
@@ -31,6 +34,22 @@ class Agent {
       if (ac.x != null && ac.y != null) return ac;
     });
   }
+  move(){
+    for (let v = 1; v <= this.vision; v++) {
+      const actions = this.getActions(v)
+      for (const act of actions) {
+        if (GameData[act.y][act.x].v && !GameData[act.y][act.x].id) {
+          moveAgent(this.x, this.y, act.x, act.y, this.color);
+          GameData[this.y][this.x] = { ...GameData[this.y][this.x], id: null };
+          this.wealth += GameData[act.y][act.x].v;
+          GameData[act.y][act.x] = { v: 0, id: this.agentID };
+          this.x = act.x;
+          this.y = act.y;
+          return;
+        }
+      }
+    }
+  }
 }
 
 const drawAgent = (x, y, color) => {
@@ -47,6 +66,12 @@ const eraseAgent = async (x, y) => {
     }, 1000);
   });
   await promise;
+};
+
+const moveAgent = (x, y, newX, newY, color) => {
+  ctx.clearRect(x * size + 1, y * size + 1, size - 2, size - 2);
+  ctx.moveTo(newX * size + 1, newY * size + 1);
+  drawAgent(newX, newY, color);
 };
 
 const positionValidity = (pos, isWidth) => {
