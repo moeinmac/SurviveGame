@@ -2,13 +2,13 @@ const dangerWealth = 4;
 const seekCost = 0.2;
 
 class Agent {
-  constructor(agentData, x, y, agentID) {
+  constructor(agentData, x, y, ID) {
     this.vision = agentData.vision;
     this.metabolism = agentData.metabolism;
     this.diligence = agentData.diligence;
     this.wealth = agentData.wealth;
     this.color = agentData.color;
-    this.agentID = agentID;
+    this.ID = ID;
     this.x = x;
     this.y = y;
   }
@@ -37,7 +37,7 @@ class Agent {
   move(act) {
     moveAgent(this.x, this.y, act.x, act.y, this.color);
     GameData[this.y][this.x] = { ...GameData[this.y][this.x], id: null };
-    GameData[act.y][act.x] = { v: 0, id: this.agentID };
+    GameData[act.y][act.x] = { v: 0, id: this.ID };
     this.x = act.x;
     this.y = act.y;
     this.wealth -= seekCost;
@@ -46,7 +46,7 @@ class Agent {
     for (let v = 1; v <= this.vision; v++) {
       const actions = this.getActions(v);
       for (const act of actions) {
-        if (GameData[act.y][act.x].v && !GameData[act.y][act.x].id) {
+        if (GameData[act.y][act.x].v && GameData[act.y][act.x].id == null) {
           this.wealth += GameData[act.y][act.x].v;
           this.move(act);
           return;
@@ -93,6 +93,34 @@ class RichKid extends Agent {
   }
 }
 
+class Robber extends Agent {
+  theif(){
+    const action = this.getActions(1);
+    for (const act of action) {
+      if(GameData[act.y][act.x].id != null ){
+        const robbed = AgentData.find((agent)=>{
+          if(agent.ID == GameData[act.y][act.x].id) return agent
+        })
+        if(robbed.constructor.name == "Robber"){
+          this.seek()
+          return
+        }
+        this.wealth += robbed.wealth / 2
+        robbed.wealth -= robbed.wealth / 2
+        robberyAgent(robbed.x,robbed.y,robbed.color)
+        return
+      }
+    }
+    this.seek()
+  }
+  work() {
+    if (this.diligence == 1) {
+      this.diligence = RData.diligence;
+      this.theif();
+    } else this.diligence -= 1;
+  }
+}
+
 const distributeAgents = (type,aNumber) => {
   let aCounter = 0;
   while (aCounter < aNumber) {
@@ -104,7 +132,7 @@ const distributeAgents = (type,aNumber) => {
         ["HW", new HardWorker(HWData, x, y, AgentData.length)],
         ["RK", new RichKid(RKData, x, y, AgentData.length)],
         // ["C", new Contented(CData, x, y, AgentData.length)],
-        // ["R", new Robber(RData, x, y, AgentData.length)],
+        ["R", new Robber(RData, x, y, AgentData.length)],
       ]);
       const agent = agentTypes.get(type);
       AgentData.push(agent);

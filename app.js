@@ -21,6 +21,15 @@ const AgentData = [];
 distributeAgents("HW",20);
 distributeAgents("T",20);
 distributeAgents("RK",20);
+distributeAgents("R",20);
+
+// const hw = new HardWorker(HWData,5,5,0);
+// GameData[5][5] = { ...GameData[5][5], id: 0 };
+// AgentData.push(hw);
+// const r = new Robber(RData,5,6,1);
+// GameData[6][5] = { ...GameData[6][5], id: 1};
+// AgentData.push(r);
+
 
 
 const game = setInterval(() => {

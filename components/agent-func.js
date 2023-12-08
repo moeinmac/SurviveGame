@@ -20,6 +20,17 @@ const moveAgent = (x, y, newX, newY, color) => {
   drawAgent(newX, newY, color);
 };
 
+const robberyAgent=async (x,y,color) => {
+  ctx.moveTo(x * size + 1, y * size + 1);
+  drawAgent(x,y,"purple");
+  const promise = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(drawAgent(x,y,color));
+    }, 500);
+  });
+  await promise;
+}
+
 const positionValidity = (pos, isWidth) => {
   if (
     pos < 0 ||
