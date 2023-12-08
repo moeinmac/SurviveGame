@@ -40,3 +40,24 @@ const positionValidity = (pos, isWidth) => {
     return null;
   return pos;
 };
+
+const renderAgentsWealth = () => {
+  let tWealth = 0;
+  let hwWealth = 0;
+  let rkWealth = 0;
+  let cWealth = 0;
+  let rWealth = 0;
+  AgentData.forEach((agent) => {
+    if (agent.constructor.name === "Talented") tWealth += agent.wealth;
+    else if (agent.constructor.name === "HardWorker") hwWealth += agent.wealth;
+    else if (agent.constructor.name === "RichKid") rkWealth += agent.wealth;
+    else if (agent.constructor.name === "Contented") cWealth += agent.wealth;
+    else if (agent.constructor.name === "Robber") rWealth += agent.wealth;
+  });
+  const maxWealth = tWealth + hwWealth + rWealth + rkWealth + cWealth;
+  const agentsWealth = [tWealth, hwWealth, rkWealth, cWealth, rWealth];
+  for (let i = 0; i < progresses.length; i++) {
+    progresses[i].value = agentsWealth[i];
+    progresses[i].max = maxWealth;
+  }
+};

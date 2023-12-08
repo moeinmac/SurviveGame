@@ -1,6 +1,8 @@
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 
+const progresses = Array.from(document.querySelectorAll("progress"));
+
 const width = 1200;
 const height = 690;
 const size = 30;
@@ -45,4 +47,5 @@ const game = setInterval(() => {
       AgentData.splice(AgentData.indexOf(agent), 1);
     }
   });
+  renderAgentsWealth()
 }, 1000);
