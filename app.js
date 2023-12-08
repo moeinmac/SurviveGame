@@ -22,17 +22,19 @@ distributeCookies();
 const AgentData = [];
 distributeAgents("HW",20);
 distributeAgents("T",20);
-distributeAgents("RK",20);
-distributeAgents("R",20);
+distributeAgents("RK",10);
+distributeAgents("C",20);
+distributeAgents("R",10);
 
-// const hw = new HardWorker(HWData,5,5,0);
+// const c = new Contented(CData,5,5,0);
 // GameData[5][5] = { ...GameData[5][5], id: 0 };
-// AgentData.push(hw);
+// AgentData.push(c);
 // const r = new Robber(RData,5,6,1);
 // GameData[6][5] = { ...GameData[6][5], id: 1};
 // AgentData.push(r);
 
-
+// AgentData[0].live()
+// AgentData[1].live()
 
 const game = setInterval(() => {
   if (AgentData.length <= 0) {

@@ -1,5 +1,5 @@
-const dangerWealth = 4;
-const seekCost = 0.2;
+const dangerWealth = 5;
+const seekCost = 0.25;
 
 class Agent {
   constructor(agentData, x, y, ID) {
@@ -93,25 +93,34 @@ class RichKid extends Agent {
   }
 }
 
+class Contented extends Agent {
+  work() {
+    if (this.wealth <= dangerWealth) this.seek();
+  }
+}
+
 class Robber extends Agent {
-  theif(){
+  theif() {
     const action = this.getActions(1);
     for (const act of action) {
-      if(GameData[act.y][act.x].id != null ){
-        const robbed = AgentData.find((agent)=>{
-          if(agent.ID == GameData[act.y][act.x].id) return agent
-        })
-        if(robbed.constructor.name == "Robber"){
-          this.seek()
-          return
+      if (GameData[act.y][act.x].id != null) {
+        const robbed = AgentData.find((agent) => {
+          if (agent.ID == GameData[act.y][act.x].id) return agent;
+        });
+        if (robbed.constructor.name == "Robber") {
+          this.seek();
+          return;
         }
-        this.wealth += robbed.wealth / 2
-        robbed.wealth -= robbed.wealth / 2
-        robberyAgent(robbed.x,robbed.y,robbed.color)
-        return
+        this.wealth += robbed.wealth / 4;
+        robbed.wealth -= robbed.wealth / 4;
+        robberyAgent(robbed.x, robbed.y, robbed.color);
+        if(robbed.constructor.name == "Contented"){
+          this.die()
+        }
+        return;
       }
     }
-    this.seek()
+    this.seek();
   }
   work() {
     if (this.diligence == 1) {
@@ -121,7 +130,7 @@ class Robber extends Agent {
   }
 }
 
-const distributeAgents = (type,aNumber) => {
+const distributeAgents = (type, aNumber) => {
   let aCounter = 0;
   while (aCounter < aNumber) {
     let x = Math.floor(Math.random() * (width / size - 1));
@@ -131,7 +140,7 @@ const distributeAgents = (type,aNumber) => {
         ["T", new Talented(TData, x, y, AgentData.length)],
         ["HW", new HardWorker(HWData, x, y, AgentData.length)],
         ["RK", new RichKid(RKData, x, y, AgentData.length)],
-        // ["C", new Contented(CData, x, y, AgentData.length)],
+        ["C", new Contented(CData, x, y, AgentData.length)],
         ["R", new Robber(RData, x, y, AgentData.length)],
       ]);
       const agent = agentTypes.get(type);
