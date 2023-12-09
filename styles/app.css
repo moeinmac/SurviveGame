@@ -108,3 +108,23 @@ main {
   padding: 0 1rem;
   font-size: 1.1rem;
 }
+
+.cookieContainer{
+  /* display: none; */
+}
+.addCookie{
+  opacity: 0;
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 1rem;
+  background-color: #B47847;
+  color : #f5f5f5;
+  cursor: pointer;
+  transition: 1s;
+}
+.addCookie.loadCookieButton{
+  opacity: 1;
+}

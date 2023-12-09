@@ -111,11 +111,12 @@ class Robber extends Agent {
           this.seek();
           return;
         }
-        this.wealth += robbed.wealth / 4;
-        robbed.wealth -= robbed.wealth / 4;
+        this.wealth += robbed.wealth / 2;
+        robbed.wealth -= robbed.wealth / 2;
         robberyAgent(robbed.x, robbed.y, robbed.color);
         if(robbed.constructor.name == "Contented"){
           this.die()
+        AgentData.splice(AgentData.indexOf(this), 1);
         }
         return;
       }
