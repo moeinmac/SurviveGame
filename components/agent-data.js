@@ -1,7 +1,7 @@
 const TData = {
   vision: 3,
   metabolism: 0.5,
-  diligence: 1,
+  diligence: 3,
   wealth: 12,
   color: "#E2791C",
 };

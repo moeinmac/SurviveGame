@@ -26,7 +26,7 @@ const loadAddCookieButton = ()=>{
     addCookieButton.classList.add("loadCookieButton");
   },10000)
 }
-console.log(GameData);
+
 addCookieButton.addEventListener("click",()=>{
   distributeCookies()
   addCookieButton.classList.remove("loadCookieButton")
@@ -41,6 +41,7 @@ distributeAgents("T",20);
 distributeAgents("RK",10);
 distributeAgents("C",20);
 distributeAgents("R",10);
+
 
 const game = setInterval(() => {
   if (AgentData.length <= 0) {
